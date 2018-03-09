@@ -3,32 +3,32 @@
 * fee for them.
 * This version is made by Dayan Jayasuriya, Nicki Lindstrom,
 * and Riley Schaaf.
-* Used for Assignment 6
-* Last updated 02/Feb/2018 21:15 by Riley
 */
 public class ChequingAccount extends BankAccount {
-  private double transactionFee;
+  private double overdraftfee;
   private double overdraftAmount;
+  private final double MINIMUM_BALANCE = 0.0;
+  private final double PENALTY_RATE = 0.2;
 
   /**
   * Constructors
   */
 
-  public ChequingAccount(double newTransactionFee) {
-    setTransactionFee(newTransactionFee);
+  public ChequingAccount(double transactionFee) {
+    setOverdraftfee(transactionFee);
   }
   public ChequingAccount(Customer accountHolder, double startBalance,
-                          double newTransactionFee) {
+                          double transactionFee) {
     setBalance(startBalance);
     setCustomer(accountHolder);
-    setTransactionFee(newTransactionFee);
+    setOverdraftfee(transactionFee);
   }
 
   /**
   * Getter methods
   */
-  public double getTransactionFee() {
-    return transactionFee;
+  public double getOverdraftFee() {
+    return overdraftfee;
   }
   public double getOverdraftAmount() {
     return overdraftAmount;
@@ -37,8 +37,8 @@ public class ChequingAccount extends BankAccount {
   /**
   * Setter Methods
   */
-  public void setTransactionFee(double fee) {
-    transactionFee = fee;
+  public void setOverdraftfee(double fee) {
+    overdraftfee = fee;
   }
   public void setOverdraftAmount(double amount) {
     overdraftAmount = -amount;
@@ -48,18 +48,29 @@ public class ChequingAccount extends BankAccount {
   * Withdraw method that overrides the withdraw method in BankAccount
   * Allows for negative withdrawls
   */
-  public void withdraw(double amountwithdraw) {
+  public void withdraw(double amount) {
 
     double currentBalance = getBalance();
     //if after withdrawl the balance is above 0, go ahead and withdraw the money
-    if ((currentBalance - amountwithdraw) >=0.0) {
-        setBalance(currentBalance - amountwithdraw);
+    if ((currentBalance - amount) >= 0.0) {
+        setBalance(currentBalance - amount);
       }
     /* if after withdrawl the balance is below 0, check the balance does not violate
     the overdraft amount. If it does not, allow the withdrawl and impose the
     fee*/
-    else if ((currentBalance - amountwithdraw) >= getOverdraftAmount()){
-        setBalance(currentBalance - (amountwithdraw + getTransactionFee()));
+    else if ((currentBalance - amount) >= getOverdraftAmount()){
+        setBalance(currentBalance - (amount + getOverdraftFee()));
       }
+  }
+
+  /**
+  * Gets the monthly bank fees and interest
+  */
+  protected double getMonthlyFeesAndInterest(){
+    double monthlyFeesAndInterest = 0.0;
+    if (getBalance() < MINIMUM_BALANCE){
+      monthlyFeesAndInterest = getBalance() * PENALTY_RATE;
+    }
+    return monthlyFeesAndInterest;
   }
 }
