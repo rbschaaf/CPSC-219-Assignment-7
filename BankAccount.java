@@ -50,12 +50,12 @@ public abstract class BankAccount {
   /**
   * Make a deposit to the bank account.
   */
-  public void deposit (double newDeposit) {
+  public void deposit (double amount) {
     //This try block catches an Exception caused by the user not entering an integer.
     try {
       //This if statement makes sure the user only deposits a positive amount of money.
-      if (newDeposit >= 0.0) {
-        balance += newDeposit;
+      if (amount >= 0.0) {
+        balance += amount;
       }
 
       else {
@@ -71,11 +71,11 @@ public abstract class BankAccount {
   /**
   * Withraw from the bank account.
   */
-  public void withdraw(double newWithdraw) {
+  public void withdraw(double amount) {
     double minimumBalance = 0;
       // if statement to check the withdrawl does not put the account into overdraft.
-    if ((getBalance() - newWithdraw) >= (minimumBalance)) {
-      setBalance(getBalance() - newWithdraw);
+    if ((getBalance() - amount) >= (minimumBalance)) {
+      setBalance(getBalance() - amount);
     }
   }
 
@@ -88,5 +88,17 @@ public abstract class BankAccount {
     if (currentBalance != getBalance()) {
       toAccount.deposit(amount);
     }
+  }
+
+  /**
+  * Gets the monthly bank fees and interest
+  */
+  protected abstract double getMonthlyFeesAndInterest();
+
+  /**
+  * Update bank account balance taking into account monthly bank fees and intrest.
+  */
+  public void monthEndUpdate(){
+    balance += getMonthlyFeesAndInterest() ;
   }
 }
