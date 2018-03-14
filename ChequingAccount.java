@@ -7,25 +7,30 @@
 public class ChequingAccount extends BankAccount {
   private double overdraftfee;
   private double overdraftAmount;
-  private final double MINIMUM_BALANCE = 0.0;
-  private final double PENALTY_RATE = 0.2;
+  public static final double MINIMUM_BALANCE = 0.0;
+  public static final double PENALTY_RATE = 0.2;
 
   /**
-  * Constructors
+  * Constructor for ChequingAccount that takes a double as the new transaction fee.
   */
-
   public ChequingAccount(double transactionFee) {
-    setOverdraftfee(transactionFee);
+    setOverdraftFee(transactionFee);
   }
+
+  /**
+  * Constructor for ChequingAccount that takes and sets an account holder, starting chequing account balance,
+  * and overdraft fee.
+  */
   public ChequingAccount(Customer accountHolder, double startBalance,
                           double transactionFee) {
-    setBalance(startBalance);
-    setCustomer(accountHolder);
-    setOverdraftfee(transactionFee);
+    super(accountHolder, startBalance);
+    setOverdraftFee(transactionFee);
   }
 
   /**
-  * Getter methods
+  * Getter methods for overdraft fee and threshold for overdraft to kick in.
+  * @return: getOverdraftFee returns the overdraft fees on the account as a double.
+  * @return: getOverdraftAmount: returns the threshold for overdraft to kick in as a double.
   */
   public double getOverdraftFee() {
     return overdraftfee;
@@ -35,9 +40,11 @@ public class ChequingAccount extends BankAccount {
   }
 
   /**
-  * Setter Methods
+  * Setter Methods for overdraft fee and threshold for overdraft to kick in.
+  * @param: setOverdraftFee: the fee charged if overdraft kicks in as a double.
+  * @param: setOverdraftAmount: the balance when overdraft kicks in as a double.
   */
-  public void setOverdraftfee(double fee) {
+  public void setOverdraftFee(double fee) {
     overdraftfee = fee;
   }
   public void setOverdraftAmount(double amount) {
@@ -47,6 +54,7 @@ public class ChequingAccount extends BankAccount {
   /**
   * Withdraw method that overrides the withdraw method in BankAccount
   * Allows for negative withdrawls
+  * @param: the amount of money that wants to be withdrawn from the account as a double.
   */
   public void withdraw(double amount) {
 
@@ -65,6 +73,7 @@ public class ChequingAccount extends BankAccount {
 
   /**
   * Gets the monthly bank fees and interest
+  * @return: the penalty fee if the account balance is too low at the end of the month as a double.
   */
   protected double getMonthlyFeesAndInterest(){
     double monthlyFeesAndInterest = 0.0;
