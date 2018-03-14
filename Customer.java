@@ -1,7 +1,6 @@
 /**
 * Team #5 Assignment 3
 * Rough Draft by Dayan Jayasuriya, Nicki Lindstrom and Riley Schaaf
-* Last updated 7/FEB/2018 09:32 by Nicki.
 *
 *
 * Class Representing a customer
@@ -30,6 +29,8 @@ public class Customer {
 
   /**
   * Setter and Getter methods for name
+  * @return: getName: the name of the customer as a string.
+  * @param: setName: the name of the customer as a string.
   */
   public String getName() {
     return name;
@@ -41,6 +42,8 @@ public class Customer {
 
   /**
   * Setter and Getter methods for customerID
+  * @return: the customer ID as an integer.
+  * @param: the customer ID as an integer.
   */
   public int getID() {
     return id;
@@ -52,6 +55,7 @@ public class Customer {
 
   /**
   * Convert instance variables to a combined string
+  * @return: the customer name and ID in a statement as type String.
   */
   public String toString() {
     String varString = ("Customer name: " + name + "; "
