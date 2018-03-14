@@ -1,5 +1,3 @@
-import java.util.InputMismatchException;
-
 /** This class works as a banking account with balances that can be checked, deposited
 * into, and withdrawn from. This version is made by Dayan Jayasuriya, Nicki Lindstrom,
 * and Riley Schaaf.
@@ -15,11 +13,14 @@ public abstract class BankAccount {
 
 
   /**
-  * Adding constructors to and for no entry of new BankAccount as well as
-  * a new customer and a new balance
+  * Default constructor for BankAccount.
   */
   public BankAccount() {
   }
+
+  /**
+  * Constructor for a BankAccount with customer and balance parameters.
+  */
   public BankAccount(Customer accountHolder, double startBalance) {
     setBalance(startBalance);
     setCustomer(accountHolder);
@@ -28,6 +29,7 @@ public abstract class BankAccount {
 
   /**
   * Check the current balance of the bank account.
+  * @return: the account balance as a double.
   */
   public double getBalance() {
     return balance;
@@ -35,41 +37,46 @@ public abstract class BankAccount {
 
   /**
   * Set the balance of the bank account
+  * @param: the balance the account will be set to as a double.
   */
   protected void setBalance(double newBalance) {
     balance = newBalance;
   }
 
+  /**
+  * Get the current customer.
+  * @return: the accountholder is returned as an object in the Customer class.
+  */
+
   public Customer getCustomer() {
     return new Customer(accountHolder);
   }
+
+  /**
+  * Set a new customer as the account holder.
+  * @param: the new accountholder as a Customer.
+  */
   public void setCustomer(Customer newCustomer) {
     accountHolder = new Customer(newCustomer);
   }
 
   /**
   * Make a deposit to the bank account.
+  * @param: the amount of money to be deposited as a double.
   */
   public void deposit (double amount) {
-    //This try block catches an Exception caused by the user not entering an integer.
-    try {
-      //This if statement makes sure the user only deposits a positive amount of money.
-      if (amount >= 0.0) {
-        balance += amount;
-      }
-
-      else {
-        System.out.println("You cannot deposit a negative number.");
-      }
+    if (amount >= 0.0) {
+      balance += amount;
     }
 
-    catch (InputMismatchException e) {
-      System.out.println("You did not enter a number to deposit.");
+    else {
+      balance = balance;
     }
   }
 
   /**
   * Withraw from the bank account.
+  * @param: the amount of money to be withdrawn as a double.
   */
   public void withdraw(double amount) {
     double minimumBalance = 0;
@@ -81,6 +88,8 @@ public abstract class BankAccount {
 
   /**
   * Transfer money to another BankAccount
+  * @param: the amount of money to be transferred as a double and the account the money
+  * will be transferred to as a type BankAccount.
   */
   public void transfer(double amount, BankAccount toAccount) {
     double currentBalance = getBalance();
@@ -91,12 +100,12 @@ public abstract class BankAccount {
   }
 
   /**
-  * Gets the monthly bank fees and interest
+  * Get the monthly bank fees and interest.
   */
   protected abstract double getMonthlyFeesAndInterest();
 
   /**
-  * Update bank account balance taking into account monthly bank fees and intrest.
+  * Update bank account balance taking into account monthly bank fees and interest.
   */
   public void monthEndUpdate(){
     balance += getMonthlyFeesAndInterest() ;
